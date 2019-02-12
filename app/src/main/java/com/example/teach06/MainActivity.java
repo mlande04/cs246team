@@ -67,55 +67,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void load(View view) {
-        final Context context = view.getContext();
+        Context context = view.getContext();
         listNum = new ArrayList();
+
         mProgBar = (ProgressBar) findViewById(R.id.determinateBar);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    InputStream inputStream = context.openFileInput("numbers.txt");
+        try {
+            InputStream inputStream = context.openFileInput("numbers.txt");
 
 
-                    if (inputStream != null) {
-                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                        String receiveString = "";
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
 
-                        //Toast.makeText(this, "made it here", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "made it here", Toast.LENGTH_SHORT).show();
 
-                        int counter = 1;
-                        while ((receiveString = bufferedReader.readLine()) != null) {
-                            listNum.add(Integer.valueOf(receiveString));
-                            //Toast.makeText(context, receiveString, Toast.LENGTH_SHORT).show();
-                            Thread.sleep(250);
-                            mProgBar.setProgress(counter * 10);
-                            counter++;
+                int counter = 1;
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    listNum.add(Integer.valueOf(receiveString));
+                    Toast.makeText(this, receiveString, Toast.LENGTH_SHORT).show();
+                    Thread.sleep(250);
+                    mProgBar.setProgress(counter * 10);
+                    counter++;
 
-                        }
-
-                        inputStream.close();
-                    }
-                }
-                catch (FileNotFoundException e) {
-                    Log.e("login activity", "File not found: " + e.toString());
-                }
-                catch (IOException e) {
-                    Log.e("login activity", "Can not read file: " + e.toString());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
 
+                inputStream.close();
             }
-        }).start();
-        Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        }
+        catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
                 android.R.layout.simple_list_item_1, listNum);
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
 
+    }
+
+    public void clear() {
+        
     }
 
        /* FileInputStream inputStream;
