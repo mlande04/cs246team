@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<Integer> listNum;
     private ProgressBar mProgBar;
+    ArrayAdapter<Integer> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,27 +106,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
+        adapter = new ArrayAdapter<Integer>(this,
                 android.R.layout.simple_list_item_1, listNum);
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(adapter);
 
     }
 
-    public void clear() {
-        
+    public void clear(View view) {
+        adapter.clear();
+        adapter.notifyDataSetChanged();
     }
-
-       /* FileInputStream inputStream;
-        int fContents;
-
-        try {
-            inputStream = openFileInput("numbers.txt");
-            while (inputStream != null) {
-                fContents = inputStream.read();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
+    
 }
